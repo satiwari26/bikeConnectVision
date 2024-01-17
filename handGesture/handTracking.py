@@ -65,26 +65,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-    # to get the coordinates of the index and thumb
-    # x1 = 0
-    # y1 = 0
-    # x2 = 0
-    # y2 = 0
-
-            #         if id == 4:
-            #         cv2.circle(img, (cx,cy), 10, (255,0,255), cv2.FILLED)   #to draw a circle on the thumb
-            #         x1 = cx
-            #         y1 = cy
-            #     if id == 8:
-            #         cv2.circle(img, (cx,cy), 10, (255,0,255), cv2.FILLED)  #to draw a circle on the index finger
-            #         x2 = cx
-            #         y2 = cy
-            # # cv2.line(img, (x1,y1), (x2,y2), (255,0,255), 3)
-
-            # # to find the distance between the index and thumb
-            # length = math.hypot(x2-x1, y2-y1)
-            # print(length)
-            # if length < 20:
-            #     cv2.circle(img, (x1,y1), 10, (0,255,0), cv2.FILLED)
