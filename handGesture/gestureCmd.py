@@ -3,6 +3,10 @@ import mediapipe as mp
 import time
 import math
 import handTracking as ht
+import geocoder
+from datetime import date
+from datetime import datetime
+import json
 
 class gestureControl():
 
@@ -12,6 +16,41 @@ class gestureControl():
         self.TmiddlePress = TmiddlePress
         self.TringPress = TringPress
         self.TpinkyPress = TpinkyPress
+    
+    def customGestureControl(self, id):
+        lat, long = geocoder.ip('me').latlng
+        current_date = date.today().isoformat()
+        current_time = datetime.now().strftime("%H:%M:%S")
+        userName = "Cruelhero"
+        location = {"lat": lat, "long": long}
+        if id == 8:
+            reason = "Lane Blockage"
+        elif id == 12:
+            reason = "High Traffic"
+        elif id == 16:
+            reason = "Emergency"
+        elif id == 20:
+            reason = "Bike Malfunction"
+        else:
+            reason = "Unknown"
+        
+        data = {
+            "date": current_date,
+            "userName": userName,
+            "location": location,
+            "reason": reason,
+            "time": current_time
+        }
+
+        try:
+            with open('./data.json', 'r+') as f:
+                existing_data = json.load(f)
+                existing_data.append(data)
+                f.seek(0)
+                json.dump(existing_data, f)
+        except FileNotFoundError:
+            with open('./data.json', 'w') as f:
+                json.dump([data], f)
 
     def identifyfingers(self,img, lmList):
         if len(lmList) != 0:
@@ -43,25 +82,28 @@ class gestureControl():
                 cv2.circle(img, (cxIndex,cyIndex), 10, (0,255,0), cv2.FILLED)
                 self.TindexPress = True
             elif Tindex > 50 and self.TindexPress == True:
-                print("Index Finger Pressed")
+                self.customGestureControl(8)
                 self.TindexPress = False
+
             if Tmiddle < 50:
                 cv2.circle(img, (cxMiddle,cyMiddle), 10, (0,255,0), cv2.FILLED)
                 self.TmiddlePress = True
             elif Tmiddle > 50 and self.TmiddlePress == True:
-                print("Middle Finger Pressed")
+                self.customGestureControl(12)
                 self.TmiddlePress = False
+
             if Tring < 50:
                 cv2.circle(img, (cxRing,cyRing), 10, (0,255,0), cv2.FILLED)
                 self.TringPress = True
             elif Tring > 50 and self.TringPress == True:
-                print("Ring Finger Pressed")
+                self.customGestureControl(16)
                 self.TringPress = False
+
             if Tpinky < 50:
                 cv2.circle(img, (cxPinky,cyPinky), 10, (0,255,0), cv2.FILLED)
                 self.TpinkyPress = True
             elif Tpinky > 50 and self.TpinkyPress == True:
-                print("Pinky Finger Pressed")
+                self.customGestureControl(20)
                 self.TpinkyPress = False
 
 def main():
