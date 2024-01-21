@@ -102,7 +102,7 @@ client.on('messageCreate', async message => {
     //getting the prominant string ready for LLM
     let parseData = await getParseData();
     let prominantString = "";
-    // prominantString = "Consider the following information provided by other biking users in slo when responding to next prompt. \n";
+    prominantString = "Can you help me write so people can understand better what is happening. These are the updates information provided by a user to another user. \n";
     for(let i = 0; i < parseData.length; i++){
         prominantString += `**Date Posted**:  ${parseData[i].date},  **Update reason**:   ${parseData[i].reason},   **User's Name**:   ${parseData[i].name},   **location**:   ${parseData[i].location},   **Time Posted**:   ${parseData[i].time} \n`;
     }
@@ -113,10 +113,36 @@ client.on('messageCreate', async message => {
     }   
         console.log(message.content);
         let promptVal = message.content.substring(21, message.content.length);
-        if(promptVal.toLowerCase().includes("update")){
-            message.reply(prominantString);
+        if(promptVal.toLowerCase().includes("update")){ //updated string request from the user
+            if(prominantString.length > 0){
+                responsePrompt = await run(prominantString);
+                if(responsePrompt == undefined){
+                    mainResponse = "Sorry something went wrong!";
+                }
+                if(responsePrompt.length > 1500){
+                    for(let i = 0; i < responsePrompt.length; i+=1500){
+                        mainResponse = responsePrompt.substring(i, Math.min(i+1500,responsePrompt.length));
+                        message.reply(mainResponse);
+                    }
+                }
+                else if(responsePrompt !== ""){
+                    try{
+                        message.reply(responsePrompt);
+                    }
+                    catch(error){
+                        console.log(error);
+                        message.reply("Sorry something went wrong!");
+                    }
+                }
+                else{
+                    message.reply("Sorry something went wrong!");
+                }
+            }
+            else{
+                message.reply("No updates found at this moment!");
+            }
         }
-        else{
+        else{   //other information request from the user
             let responsePrompt = "";
             if(promptVal.length > 0){   //only pass the value to bard if it's not null
                 console.log(prominantString);

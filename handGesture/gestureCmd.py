@@ -23,7 +23,7 @@ class gestureControl():
     def customGestureControl(self, id):
         lat, long = geocoder.ip('me').latlng
         current_date = date.today().isoformat()
-        current_time = datetime.now().strftime("%H:%M:%S")
+        current_time = datetime.now().strftime("%I:%M:%S %p")
         userName = "Cruelhero"
         location = {"lat": lat, "long": long}
         if id == 8:
