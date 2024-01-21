@@ -6,7 +6,6 @@ const fs = require('fs');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.Google_Bard_API);
 const axios = require('axios');
-// const { joinVoiceChannel, createAudioResource, StreamType, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 const discord_token = process.env.Discord_bot_API;
@@ -105,8 +104,6 @@ client.on('messageCreate', async message => {
 
     let mainResponse = "";
     if(message.author.bot) return;  //to avoid making it respond to itself
-    if( message.content !== ''){
-    }   
         console.log(message.content);
         let promptVal = message.content.substring(21, message.content.length);
         if(promptVal.toLowerCase().includes("update")){ //updated string request from the user

@@ -22,9 +22,19 @@
         subTitle: '2900 Broad St, San Luis Obispo, CA 93401, United States', // Subtitle of the pushpin, shown when hovered over
         text: '1'
         });
+        
+        pushpinLocation = new Microsoft.Maps.Location(35.2635, -120.6596);
+
+        // Create the pushpin
+        var pushpin2 = new Microsoft.Maps.Pushpin(pushpinLocation,{
+            title: "High Traffic", // Title of the pushpin, shown when hovered over
+        subTitle: '2333 Monterey St, San Luis Obispo, CA 93401, United States', // Subtitle of the pushpin, shown when hovered over
+        text: '1'
+        });
 
         // Add the pushpin to the map
         map.entities.push(pushpin);
+        map.entities.push(pushpin2);
     }
     </script>
     <style>
