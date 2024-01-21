@@ -7,19 +7,31 @@
     function GetMap() {
         var map = new Microsoft.Maps.Map('#myMap', {
             // place holder for the map api key
-            credentials: 'Your_Bing_Maps_Key'   
+            credentials: 'AukFlHyTPqTvWVE0XupToV2dRzLeBXs04yh9qfKnNSzu7jnfFT2MRbbE5V1bPgOj'   
         });
         map.setView({
             center: new Microsoft.Maps.Location(47.6149, -122.1941),
             zoom: 10
         });
+        // Create a location for the pushpin
+        var pushpinLocation = new Microsoft.Maps.Location(47.6149, -122.1941);
+
+        // Create the pushpin
+        var pushpin = new Microsoft.Maps.Pushpin(pushpinLocation,{
+            title: 'My Pushpin', // Title of the pushpin, shown when hovered over
+        subTitle: 'Some location', // Subtitle of the pushpin, shown when hovered over
+        text: '1'
+        });
+
+        // Add the pushpin to the map
+        map.entities.push(pushpin);
     }
     </script>
     <style>
         #myMap {
             position: relative;
-            width: 600px;
-            height: 400px;
+            width: 1500px;
+            height: 900px;
         }
     </style>
 </head>
