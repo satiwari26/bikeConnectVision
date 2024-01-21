@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Bing Map</title>
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+    <script type='text/javascript'>
+    function GetMap() {
+        var map = new Microsoft.Maps.Map('#myMap', {
+            // place holder for the map api key
+            credentials: 'AukFlHyTPqTvWVE0XupToV2dRzLeBXs04yh9qfKnNSzu7jnfFT2MRbbE5V1bPgOj'   
+        });
+        map.setView({
+            center: new Microsoft.Maps.Location(35.2635, -120.6509),
+            zoom: 15
+        });
+        // Create a location for the pushpin
+        var pushpinLocation = new Microsoft.Maps.Location(35.2635, -120.6509);
+
+        // Create the pushpin
+        var pushpin = new Microsoft.Maps.Pushpin(pushpinLocation,{
+            title: "High Traffic", // Title of the pushpin, shown when hovered over
+        subTitle: '2900 Broad St, San Luis Obispo, CA 93401, United States', // Subtitle of the pushpin, shown when hovered over
+        text: '1'
+        });
+
+        // Add the pushpin to the map
+        map.entities.push(pushpin);
+    }
+    </script>
+    <style>
+        #myMap {
+            position: relative;
+            width: 1900px;
+            height: 930px;
+        }
+    </style>
+</head>
+<body>
+    <div id="myMap"></div>
+</body>
+</html>

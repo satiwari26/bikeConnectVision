@@ -120,10 +120,12 @@ client.on('messageCreate', async message => {
                         mainResponse = responsePrompt.substring(i, Math.min(i+1500,responsePrompt.length));
                         message.reply(mainResponse);
                     }
+                    message.reply("**Link:** ```C:/Users/tiwar/Desktop/bikeConnectVision/BikerBot/index.html```\n");
                 }
                 else if(responsePrompt !== ""){
                     try{
                         message.reply(responsePrompt);
+                        message.reply("**Link:** ```C:/Users/tiwar/Desktop/bikeConnectVision/BikerBot/index.html```\n");
                     }
                     catch(error){
                         console.log(error);
