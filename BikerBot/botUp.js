@@ -11,7 +11,7 @@ const axios = require('axios');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 const discord_token = process.env.Discord_bot_API;
 
-app.listen(3000, ()=>{
+app.listen(3300, ()=>{
     console.log("Bot is running");
 });
 
@@ -62,10 +62,6 @@ async function getLocation(lat, long) {
     }
 }
 
-// getLocation(35.2828, -120.6596)
-//     .then(address => console.log(address))
-//     .catch(error => console.error(error));
-
 async function getParseData(){
     // parsing the location data for the user to get the message update
     let parseData = [];
@@ -75,7 +71,7 @@ async function getParseData(){
     if(bikersInformation.status == true){
         let locationCoordinates = [];
         for(let i = 0; i < bikersInformation.userUpdateData.length; i++){
-            locationCoordinates.push(bikersInformation.userUpdateData[i].location);
+            locationCoordinates.push({reason: bikersInformation.userUpdateData[i].reason, location: bikersInformation.userUpdateData[i].location});
 
             let addr = await getLocation(bikersInformation.userUpdateData[i].location.lat,
                 bikersInformation.userUpdateData[i].location.long);
