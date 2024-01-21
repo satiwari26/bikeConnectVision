@@ -1,2 +1,8 @@
 # remove the virtual environment of python
 myenv/
+
+# remove the node_modules folder
+node_modules/
+
+# remove the .env file
+.env

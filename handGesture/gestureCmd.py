@@ -10,12 +10,15 @@ import json
 
 class gestureControl():
 
-    def __init__(self, TindexPress = False, TmiddlePress = False, TringPress = False, TpinkyPress = False):
+    def __init__(self, TindexPress = False, TmiddlePress = False, TringPress = False, TpinkyPress = False, TindexBottomPress = False):
         #creating state variables for each finger approximity
         self.TindexPress = TindexPress
         self.TmiddlePress = TmiddlePress
         self.TringPress = TringPress
         self.TpinkyPress = TpinkyPress
+        self.TindexBottomPress = TindexBottomPress
+        self.QuitProgram = False
+
     
     def customGestureControl(self, id):
         lat, long = geocoder.ip('me').latlng
@@ -73,10 +76,12 @@ class gestureControl():
             id,cxMiddle, cyMiddle = lmList[12]
             id,cxRing, cyRing = lmList[16]
             id,cxPinky, cyPinky = lmList[20]
+            id, cxIndexBottom, cyIndexBottom = lmList[5]
             Tindex = math.hypot(cxThumb-cxIndex, cyThumb-cyIndex)
             Tmiddle = math.hypot(cxThumb-cxMiddle, cyThumb-cyMiddle)
             Tring = math.hypot(cxThumb-cxRing, cyThumb-cyRing)
             Tpinky = math.hypot(cxThumb-cxPinky, cyThumb-cyPinky)
+            TindexBottom = math.hypot(cxIndex-cxIndexBottom, cyIndex-cyIndexBottom)
 
             if Tindex < 50:
                 cv2.circle(img, (cxIndex,cyIndex), 10, (0,255,0), cv2.FILLED)
@@ -106,6 +111,12 @@ class gestureControl():
                 self.customGestureControl(20)
                 self.TpinkyPress = False
 
+            if TindexBottom < 50:   # gesture to quit the program
+                cv2.circle(img, (cxIndexBottom,cyIndexBottom), 10, (0,255,0), cv2.FILLED)
+                self.TindexBottomPress = True
+            elif TindexBottom > 50 and self.TindexBottomPress == True:
+                self.QuitProgram = True
+
 def main():
     cap = cv2.VideoCapture(0)
     # find the frame rate
@@ -114,6 +125,8 @@ def main():
     controller = gestureControl()   #to initialize the class
     detector = ht.handDetector()   #to initialize the class
     while True:
+        if(controller.QuitProgram == True):
+            break
         success, img = cap.read()
         img = detector.findHands(img)   #to find the hands
         lmList = detector.findPosition(img)   #to find the position of the hand
