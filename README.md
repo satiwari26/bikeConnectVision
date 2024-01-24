@@ -7,5 +7,5 @@
 ![Demo Gif](./bikeCV.gif)
 
 ## License
-This project is licensed under the terms of the [MIT License](./LICENSE.txt) - see the [LICENSE.txt](./LICENSE.txt) file for details.
+This project is licensed under the terms of the [MIT License](./license.txt) - see the [LICENSE.txt](./license.txt) file for details.
 
